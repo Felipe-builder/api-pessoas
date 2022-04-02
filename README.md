@@ -16,12 +16,10 @@
   <p align="center" style="indent-text">.<p>
 
 ## Pre Requisites
-<a href="https://nodejs.org/en/download/"><img src="https://img.shields.io/badge/nodejs-v16.14.0
--green?style=for-the-badge&logo=node.js"/></a></br>
+<a href="https://nodejs.org/en/download/"><img src="https://img.shields.io/badge/nodejs-v16.14.0-green?style=for-the-badge&logo=node.js"/></a></br>
 <a href="https://www.mongodb.com/try/download/community"><img src="https://img.shields.io/badge/mongodb-yellowgreen?style=for-the-badge&logo=mongodb"/></a></br>
 <a href="https://docs.npmjs.com/about-npm"><img src="https://img.shields.io/badge/npm-v8.3.1-yellow?style=for-the-badge&logo=npm"/></a></br>
-<a href="https://code.visualstudio.com/download"><img src="https://img.shields.io/badge/vscode-yellow?style=for-the-badge&logo=Visual Studio Code
-"/></a>
+<a href="https://code.visualstudio.com/download"><img src="https://img.shields.io/badge/vscode-yellow?style=for-the-badge&logo=Visual Studio Code"/></a>
 
 ## Recursos
 ### Consumido
