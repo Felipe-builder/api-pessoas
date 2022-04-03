@@ -1,11 +1,15 @@
 import mongoose from "mongoose";
-// import moment from "moment";
 
 
 const jobSchema = new mongoose.Schema(
   {
     id: {type: String},
     nome: {type: String, required: true},
+    usuario: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'usuarios',
+      required: true
+    },
     status: {
       type: String,
       enum: ['ATIVO', 'INATIVO'],

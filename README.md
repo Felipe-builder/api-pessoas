@@ -37,6 +37,7 @@ API built in nodejs whose functionality is to manipulate data from "users" and "
 >   - DELETE /usuarios/:id
 >   - POST /jobs
 >   - GET /jobs
+>   - GET /jobs/busca?usuario=:id
 >   - GET /jobs/:id
 >   - PUT /jobs/:id
 >   - DELETE /jobs/:id

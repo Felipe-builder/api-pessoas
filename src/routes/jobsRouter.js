@@ -5,6 +5,7 @@ const router = express.Router();
 
 router
     .get("/jobs", JobController.listarJobs)
+    .get("/jobs/busca", JobController.listarJobPorUsuario)
     .get("/jobs/:id", JobController.listarJobPorId)
     .post("/jobs", JobController.cadastrarJob)
     .put("/jobs/:id", JobController.atualizarJob)
