@@ -21,14 +21,19 @@ const jobSchema = new mongoose.Schema(
       enum: ['INTERVALO', 'HORÁRIO FIXO'],
       required: true
     },
-    valorRecorrencia: {
+    valorIntervalo: {
       type: Date,
-      default: Date.now(),
-      required: true
+    },
+    valorHorarioFixo: {
+      type: Date,
     }
-  }
-)
 
-const jobs = mongoose.model("jobs", jobSchema)
+  }
+);
+
+//below line will automatically generate createdAt and updatedAt fields
+jobSchema.set('timestamps', true);
+
+const jobs = mongoose.model("jobs", jobSchema);
 
 export default jobs;

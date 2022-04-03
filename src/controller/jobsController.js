@@ -64,14 +64,29 @@ class JobController {
 
   static listarJobPorUsuario = (req, res) => {
     const usuario = req.query.usuario
-    console.log(usuario)
-    jobs.find({'usuario': usuario}, {}, (err, jobs) => {
+    jobs.find({'usuario': usuario})
+      .populate('usuario', 'nome')
+      .exec((err, jobs) => {
         if(err) {
-            res.status(400).send({message: `${err.message} - Não foi localizado Jobs por esse Usuário`})
+            res.status(404).send({message: `${err.message} - Não foi localizado Jobs por esse Usuário`})
         } else {
             res.status(200).send(jobs)
         }
-    })
+      })
+  }
+
+  static listarJobPorDataCriacao = (req, res) => {
+    const dataCriacao = new Date(req.query.dt_criacao)
+    console.log(dataCriacao)
+    jobs.find({'createdAt': dataCriacao})
+      .populate('usuario', 'nome')
+      .exec((err, jobs) => {
+        if(err) {
+          res.status(404).send({message: `${err.message} - Não há jobs regristado nessa data!`})
+        } else {
+          res.status(200).send(jobs)
+        }
+      })
   }
 }
 

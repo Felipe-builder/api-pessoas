@@ -10,6 +10,8 @@ const usuarioSchema = new mongoose.Schema(
   }
 );
 
+usuarioSchema.set('timestamps', true);
+
 const usuarios = mongoose.model('usuarios', usuarioSchema);
 
 export default usuarios;
