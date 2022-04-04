@@ -23,7 +23,6 @@
 
 # Summay
 
-Resultados de tradução
 API built in nodejs whose functionality is to manipulate data from "users" and "jobs". 
 
 
