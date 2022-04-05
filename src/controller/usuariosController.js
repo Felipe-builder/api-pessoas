@@ -1,4 +1,5 @@
 import usuarios from "../models/Usuario.js";
+import moment from "moment";
 
 class UsuarioController {
 
@@ -55,6 +56,36 @@ class UsuarioController {
         res.status(500).send({message: err.message})
       }
     })
+  }
+
+
+  static listarUsuarioPorNome = (req, res) => {
+    const nome = req.body.nome
+    usuarios.find({'nome': nome})
+      .exec((err, usuarios) => {
+        if(err) {
+            res.status(404).send({message: `${err.message} - Não foi localizado usuarios por esse Usuário`})
+        } else {
+            res.status(200).send(usuarios)
+        }
+      })
+  }
+
+  static listarUsuarioPorDataCriacao = (req, res) => {
+    const dataCriacao = new Date(req.query.dt_criacao);
+    const dt = new Date(moment(dataCriacao).add(1, 'days'));
+    console.log(typeof dataCriacao + " " + dataCriacao)
+    console.log(typeof dt + " " + (dt))
+  
+    usuarios.find({'createdAt': { $gte: dataCriacao,
+              $lte: dt} })
+      .exec((err, usuarios) => {
+        if(err) {
+          res.status(404).send({message: `${err.message} - Não há usuarios regristado nessa data!`})
+        } else {
+          res.status(200).send(usuarios)
+        }
+      })
   }
 }
 

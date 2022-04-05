@@ -1,5 +1,5 @@
 import jobs from "../models/Job.js";
-import usuarios from "../models/Usuario.js";
+import moment from "moment";
 
 class JobController {
 
@@ -7,7 +7,7 @@ class JobController {
     jobs.find()
         .populate('usuario', 'nome')
         .exec((err, jobs) => {
-            res.status(200).json(jobs)
+          res.status(200).json(jobs)
         })
   }
 
@@ -18,9 +18,10 @@ class JobController {
         .populate('usuario')
         .exec((err, jobs) => {
             if(err) {
-                res.status(404).send({message: `${err.message} - Id do Job não encontrado.`})
+              res.status(404).send({message: `${err.message} - Id do Job não encontrado.`})
             } else {
-                res.status(200).send(jobs);
+              console.log(jobs)
+              res.status(200).send(jobs);
             }
         })
   }
@@ -76,9 +77,13 @@ class JobController {
   }
 
   static listarJobPorDataCriacao = (req, res) => {
-    const dataCriacao = new Date(req.query.dt_criacao)
-    console.log(dataCriacao)
-    jobs.find({'createdAt': dataCriacao})
+    const dataCriacao = new Date(req.query.dt_criacao);
+    const dt = new Date(moment(dataCriacao).add(1, 'days'));
+    console.log(typeof dataCriacao + " " + dataCriacao)
+    console.log(typeof dt + " " + (dt))
+  
+    jobs.find({'createdAt': { $gte: dataCriacao,
+              $lte: dt} })
       .populate('usuario', 'nome')
       .exec((err, jobs) => {
         if(err) {
