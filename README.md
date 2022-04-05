@@ -31,12 +31,15 @@ API built in nodejs whose functionality is to manipulate data from "users" and "
 >- API
 >   - POST /usuarios
 >   - GET /usuarios
+>   - GET /usuarios/busca-data?dt_criacao=\<createAt\>
+>   - POST /usuarios/busca-nome
 >   - GET /usuarios/:id
 >   - PUT /usuarios/:id
 >   - DELETE /usuarios/:id
 >   - POST /jobs
 >   - GET /jobs
->   - GET /jobs/busca?usuario=:id
+>   - GET /jobs/busca-usuario?usuario=\<id\>
+>   - GET /jobs/busca-data?dt_criacao=\<createdAt\>
 >   - GET /jobs/:id
 >   - PUT /jobs/:id
 >   - DELETE /jobs/:id
