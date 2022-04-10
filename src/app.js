@@ -10,9 +10,10 @@ db.once("open", () => {
 })
 
 const app = express();
-app.use(cors()) 
 
 app.use(bodyParser.json())
+
+app.use(cors()) 
 
 routes(app);
 
