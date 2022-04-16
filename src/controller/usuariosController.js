@@ -61,7 +61,7 @@ class UsuarioController {
 
   static listarUsuarioPorNome = (req, res) => {
     const nome = req.body.nome
-    usuarios.find({'nome': nome})
+    usuarios.find({'nome': { '$regex': nome, '$options': 'i'}})
       .exec((err, usuarios) => {
         if(err) {
             res.status(404).send({message: `${err.message} - Não foi localizado usuarios por esse Usuário`})

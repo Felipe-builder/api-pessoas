@@ -63,13 +63,27 @@ class JobController {
     })
   }
 
-  static listarJobPorUsuario = (req, res) => {
-    const usuario = req.query.usuario
-    jobs.find({'usuario': usuario})
+  static listarJobPorUsuarioID = (req, res) => {
+    const usuarioID = req.query.usuario_id
+    jobs.find({'usuario': usuarioID})
       .populate('usuario', 'nome')
       .exec((err, jobs) => {
         if(err) {
             res.status(404).send({message: `${err.message} - Não foi localizado Jobs por esse Usuário`})
+        } else {
+            res.status(200).send(jobs)
+        }
+      })
+  }
+
+  static listarJobPorNomeUsuario = (req, res) => {
+    const nomeUsuario = req.query.usuario_nome;
+    console.log(nomeUsuario);
+    jobs.find({'usuario.nome': { '$regex': nomeUsuario, '$options': 'i'}})
+      .populate('usuario', 'nome')
+      .exec((err, jobs) => {
+        if(err) {
+            res.status(404).send({message: `${err.message} - Não foi localizado jobs por esse Usuário`})
         } else {
             res.status(200).send(jobs)
         }
