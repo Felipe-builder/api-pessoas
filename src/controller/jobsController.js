@@ -27,6 +27,18 @@ class JobController {
   }
 
   static cadastrarJob = (req, res) => {
+    const novaData = new Date();
+    const intervalo = req.body.valorIntervalo;
+    const horarioFixo = req.body.valorHorarioFixo;
+    if (typeof intervalo === 'string' && intervalo.length > 0) {
+      let hours = intervalo.split(':');
+      novaData.setHours((Number(hours[0] - 3)), Number(hours[1]));
+      req.body.valorIntervalo = novaData;
+    } else if (typeof horarioFixo === 'string' && horarioFixo.length > 0) {
+      let hours = horarioFixo.split(':');
+      novaData.setHours((Number(hours[0] - 3)), Number(hours[1]));
+      req.body.valorHorarioFixo = novaData;
+    }
     let job = new jobs(req.body);
 
     job.save((err) => {
