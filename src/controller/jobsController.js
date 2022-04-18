@@ -1,5 +1,8 @@
-import jobs from "../models/Job.js";
 import moment from "moment";
+
+import jobs from "../models/Job.js";
+import usuarios from "../models/Usuario.js";
+import UsuarioController from "./usuariosController.js";
 
 class JobController {
 
@@ -91,7 +94,7 @@ class JobController {
   static listarJobPorNomeUsuario = (req, res) => {
     const nomeUsuario = req.query.usuario_nome;
     console.log(nomeUsuario);
-    jobs.find({'usuario.nome': { '$regex': nomeUsuario, '$options': 'i'}})
+    jobs.find({ 'usuario.nome' : { '$regex': nomeUsuario, '$options': 'i'}})
       .populate('usuario', 'nome')
       .exec((err, jobs) => {
         if(err) {

@@ -1,0 +1,377 @@
+{
+	"info": {
+		"_postman_id": "ac38f24c-acdc-4326-b0a5-6d58b973ec2f",
+		"name": "API_Pessoas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "/usuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/usuarios",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/usuarios/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/usuarios/625756c76ca918fa844cf301",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios",
+								"625756c76ca918fa844cf301"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/usuarios/busca-data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/usuarios/busca-data?dt_criacao=2022-04-05",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios",
+								"busca-data"
+							],
+							"query": [
+								{
+									"key": "dt_criacao",
+									"value": "2022-04-05"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/usuarios",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Lucas Junior\",\n    \"email\": \"lucas_ribeiro@hotmail.com\",\n    \"senha\": \"luc123\",\n    \"telefone\": 400280993\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/usuarios",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/usuarios/busca-nome",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/usuarios/busca-nome?usuario_nome=Junior",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios",
+								"busca-nome"
+							],
+							"query": [
+								{
+									"key": "usuario_nome",
+									"value": "Junior"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/usuarios/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"João Fausto\",\n    \"email\": \"fasto-oliveira@hotmail.com\",\n    \"senha\": \"asdhgasa12\",\n    \"telefone\": 777848481\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/usuarios/62479bc841b53bb27c7ab3bc",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios",
+								"62479bc841b53bb27c7ab3bc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/usuarios/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/usuarios/6247a214db825b255d7a1b07",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"usuarios",
+								"6247a214db825b255d7a1b07"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Jobs",
+			"item": [
+				{
+					"name": "/jobs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/jobs",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/jobs/busca?usuario=:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/jobs/busca-usuario-id?usuario_id=62479bc841b53bb27c7ab3bc",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"jobs",
+								"busca-usuario-id"
+							],
+							"query": [
+								{
+									"key": "usuario_id",
+									"value": "62479bc841b53bb27c7ab3bc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/jobs/busca-usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/jobs/busca-usuario-nome?usuario_nome=j",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"jobs",
+								"busca-usuario-nome"
+							],
+							"query": [
+								{
+									"key": "usuario_nome",
+									"value": "j"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/jobs/busca?dt_criacao=<createdAt>",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/jobs/busca-data?dt_criacao=2022-04-03",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"jobs",
+								"busca-data"
+							],
+							"query": [
+								{
+									"key": "dt_criacao",
+									"value": "2022-04-03"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/jobs/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/jobs/624901b12156bc7596b9e1ab",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"jobs",
+								"624901b12156bc7596b9e1ab"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/jobs",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Imperador\",\n    \"usuario\": \"625756c76ca918fa844cf301\",\n    \"status\": \"INATIVO\",\n    \"tipoRecorrencia\": \"HORÁRIO FIXO\",\n    \"valorHorarioFixo\": \"12:12\"\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/jobs",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/jobs/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"usuario\": \"62478f811e078d8d90e9d4f2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/jobs/6248b4d343ece70548efd3c8",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"jobs",
+								"6248b4d343ece70548efd3c8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/usuarios/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/jobs/6259d4e92b6b1425a7351d1d",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"jobs",
+								"6259d4e92b6b1425a7351d1d"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "localhost:3000"
+		}
+	]
+}

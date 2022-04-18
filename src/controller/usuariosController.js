@@ -60,7 +60,7 @@ class UsuarioController {
 
 
   static listarUsuarioPorNome = (req, res) => {
-    const nome = req.body.nome
+    const nome = req.query.usuario_nome
     usuarios.find({'nome': { '$regex': nome, '$options': 'i'}})
       .exec((err, usuarios) => {
         if(err) {
@@ -73,10 +73,7 @@ class UsuarioController {
 
   static listarUsuarioPorDataCriacao = (req, res) => {
     const dataCriacao = new Date(req.query.dt_criacao);
-    const dt = new Date(moment(dataCriacao).add(1, 'days'));
-    console.log(typeof dataCriacao + " " + dataCriacao)
-    console.log(typeof dt + " " + (dt))
-  
+    const dt = new Date(moment(dataCriacao).add(1, 'days'));  
     usuarios.find({'createdAt': { $gte: dataCriacao,
               $lte: dt} })
       .exec((err, usuarios) => {

@@ -32,17 +32,20 @@ API built in nodejs whose functionality is to manipulate data from "users" and "
 >   - POST /usuarios
 >   - GET /usuarios
 >   - GET /usuarios/busca-data?dt_criacao=\<createAt\>
->   - POST /usuarios/busca-nome
+>   - GET /usuarios/busca-nome?usuario_nome=\<nome\>
 >   - GET /usuarios/:id
 >   - PUT /usuarios/:id
 >   - DELETE /usuarios/:id
 >   - POST /jobs
 >   - GET /jobs
->   - GET /jobs/busca-usuario?usuario=\<id\>
+>   - GET /jobs/busca-usuario-id?usuario=\<id\>
+>   - GET /jobs/busca-usuario-nome?usuario_nome=\<nome\> (BUG = falta ajustar)
 >   - GET /jobs/busca-data?dt_criacao=\<createdAt\>
 >   - GET /jobs/:id
 >   - PUT /jobs/:id
 >   - DELETE /jobs/:id
+
+[Postman Collections](./postman/API_Pessoas.postman_collection.json)
 
 # Compilation Guide
 
