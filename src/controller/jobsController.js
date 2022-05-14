@@ -3,15 +3,19 @@ import moment from "moment";
 import jobs from "../models/Job.js";
 import usuarios from "../models/Usuario.js";
 import UsuarioController from "./usuariosController.js";
+import Services from "../services/Services.js";
+const JobService = new Services('Job')
 
 class JobController {
 
-  static listarJobs = (req, res) => {
-    jobs.find()
-        .populate('usuario', 'nome')
-        .exec((err, jobs) => {
-          res.status(200).json(jobs)
-        })
+  static async listarJobs(req, res) {
+    try {
+      const jobs = await jobs.find().populate('usuario', 'nome').exec()
+      return res.status(200).json(jobs)
+    } catch(err) {
+      return res.status(500).json(err.message)
+    }
+
   }
 
   static listarJobPorId = (req, res) => {
