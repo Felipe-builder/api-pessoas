@@ -1,69 +1,63 @@
 import moment from "moment";
 
 import jobs from "../models/Job.js";
-import usuarios from "../models/Usuario.js";
-import UsuarioController from "./usuariosController.js";
+import { JobServices } from "../services/JobServices.js";
+const jobService = new JobServices()
 
 class JobController {
 
-  static listarJobs = (req, res) => {
-    jobs.find()
-        .populate('usuario', 'nome')
-        .exec((err, jobs) => {
-          res.status(200).json(jobs)
-        })
+  static async listarJobs(req, res) {
+    try {
+      const jobs = await jobService.listarTudo()
+      return res.status(200).json(jobs)
+    } catch(err) {
+      return res.status(500).json(err.message)
+    }
+
   }
 
-  static listarJobPorId = (req, res) => {
+  static async listarJobPorId(req, res) {
     const id = req.params.id;
 
-    jobs.findById(id)
-        .populate('usuario')
-        .exec((err, jobs) => {
-            if(err) {
-              res.status(404).send({message: `${err.message} - Id do Job não encontrado.`})
-            } else {
-              console.log(jobs)
-              res.status(200).send(jobs);
-            }
-        })
+    try {
+      const jobEncontrado = await jobService.listarPorId(id)
+      return res.status(200).json(jobEncontrado);
+    } catch (err) {
+      return res.status(404).json({message: `${err.message} - Id do Job não encontrado.`})
+    }
   }
 
-  static cadastrarJob = (req, res) => {
+  static async cadastrarJob(req, res) {
     const novaData = new Date();
-    const intervalo = req.body.valorIntervalo;
-    const horarioFixo = req.body.valorHorarioFixo;
-    if (typeof intervalo === 'string' && intervalo.length > 0) {
-      let hours = intervalo.split(':');
+    const { valorIntervalo, valorHorarioFixo } = req.body
+    if (typeof valorIntervalo === 'string' && valorIntervalo.length > 0) {
+      let hours = valorIntervalo.split(':');
       novaData.setHours((Number(hours[0] - 3)), Number(hours[1]));
       req.body.valorIntervalo = novaData;
-    } else if (typeof horarioFixo === 'string' && horarioFixo.length > 0) {
-      let hours = horarioFixo.split(':');
+    } else if (typeof valorHorarioFixo === 'string' && valorHorarioFixo.length > 0) {
+      let hours = valorHorarioFixo.split(':');
       novaData.setHours((Number(hours[0] - 3)), Number(hours[1]));
       req.body.valorHorarioFixo = novaData;
     }
-    let job = new jobs(req.body);
-
-    job.save((err) => {
-
-      if(err) {
-        res.status(500).send({message: `${err.message} - falha ao cadastrar job.`})
-      } else {
-        res.status(201).send(job.toJSON())
-      }
-    })
+    const job = req.body;
+    try {
+      const jobCriado = await jobService.cadastrar(job)
+      return res.status(201).json(jobCriado)
+    } catch(err) {
+      return res.status(500).json({message: `${err.message} - falha ao cadastrar job.`})
+    }
   }
 
-  static atualizarJob = (req, res) => {
+  static async atualizarJob(req, res) {
     const id = req.params.id;
     const body = req.body 
-    jobs.findByIdAndUpdate(id, {$set: body}, (err) => {
-      if(!err) {
-        res.status(200).send({message: 'Job atualizado com sucesso!'})
-      } else {
-        res.status(500).send({message: err.message})
-      }
-    })
+
+    try {
+      await jobService.atualizar(id, body)
+      return res.status(200).json({message: 'Job atualizado com sucesso!'})
+    } catch (err) {
+      return res.status(500).json({message: err.message})
+    }
   }
 
   static deletarJob = (req, res) => {
