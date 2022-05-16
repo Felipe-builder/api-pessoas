@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import validator from "validator";
+import bcrypt from "bcrypt";
 
 const usuarioSchema = new mongoose.Schema(
   {
@@ -39,6 +40,38 @@ const usuarioSchema = new mongoose.Schema(
 );
 
 usuarioSchema.set('timestamps', true);
+
+usuarioSchema.pre('save', function(next) {
+  const usuario = this
+
+  if (!usuario.isModified('senha') || this.isNew) {
+    bcrypt.genSalt(10, function(saltError, salt) {
+      if (saltError) {
+        return next(saltError)
+      } else {
+        bcrypt.hash(usuario.senha, salt, function(hashError, hash){
+          if (hashError) {
+            return next(hashError)
+          }
+          usuario.senha = hash
+          next()
+        })
+      }
+    })
+  } else {
+    return next()
+  }
+})
+
+usuarioSchema.methods.comparePassword = function(senha, callback) {
+  bcrypt.compare(senha, this.senha, function(error, isMatch){
+    if (error) {
+      return callback(error)
+    } else {
+      callback(null, isMatch)
+    }
+  })
+}
 
 const usuarios = mongoose.model('usuarios', usuarioSchema);
 
