@@ -15,7 +15,9 @@ const usuarioSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      unique: true,
+      index: {
+        unique: true,
+      },
       trim: true,
       lowercase: true,
       validate(value) {
@@ -63,15 +65,15 @@ usuarioSchema.pre('save', function(next) {
   }
 })
 
-usuarioSchema.methods.comparePassword = function(senha, callback) {
-  bcrypt.compare(senha, this.senha, function(error, isMatch){
-    if (error) {
-      return callback(error)
-    } else {
-      callback(null, isMatch)
-    }
-  })
-}
+// usuarioSchema.methods.comparePassword = function(senha, callback) {
+//   bcrypt.compare(senha, this.senha, function(error, isMatch){
+//     if (error) {
+//       return callback(error)
+//     } else {
+//       callback(null, isMatch)
+//     }
+//   })
+// }
 
 const usuarios = mongoose.model('usuarios', usuarioSchema);
 

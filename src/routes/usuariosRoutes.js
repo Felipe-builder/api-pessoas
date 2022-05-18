@@ -1,10 +1,13 @@
 import express from "express";
+import passport from "passport";
+
 import UsuarioController from "../controller/usuariosController.js";
 
 const router = express.Router();
 
 router
     .get("/usuarios", UsuarioController.listarUsuarios)
+    .post("/usuarios/login", passport.authenticate('local', {session: false}), UsuarioController.login)
     .get("/usuarios/busca-data", UsuarioController.listarUsuarioPorDataCriacao)
     .get("/usuarios/busca-nome", UsuarioController.listarUsuarioPorNome)
     .get("/usuarios/:id", UsuarioController.listarUsuarioPorId)
