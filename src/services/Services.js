@@ -13,6 +13,10 @@ export default class Services {
         return Modelo[this.nomeDoModelo].findById(id)
     }
 
+    async listarUmRegistro(where = {}) {
+        return Modelo[this.nomeDoModelo].find(where).exec()
+    }
+
     async cadastrar(dados) {
         return Modelo[this.nomeDoModelo].create(dados)
     }

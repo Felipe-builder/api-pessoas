@@ -5,7 +5,6 @@ import Modelo from "../models/index.js";
 export class JobServices extends Services {
     constructor(){
         super('Job')
-
     }
 
     async listarTudo() {
