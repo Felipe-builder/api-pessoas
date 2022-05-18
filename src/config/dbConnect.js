@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
-mongoose.connect("mongodb+srv://admin1:hdaslRNBCnP1sNY4@linkapi.lhkas.mongodb.net/linkapi");
+mongoose.connect(process.env.DATABASE);
 
 let db = mongoose.connection;
 

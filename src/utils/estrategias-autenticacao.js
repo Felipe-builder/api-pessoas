@@ -4,26 +4,21 @@ import bcrypt from "bcrypt";
 
 import { UsuarioServices } from "../services/UsuarioServices.js";
 import { InvalidArgumentError } from "../erros/erros.js"
-// const InvalidArgumentError = new erros
 
 const usuarioServices = new UsuarioServices()
 const LocalStrategy = passportLocal.Strategy;
 
 function verificaUsuario(usuario) {
     if (!usuario) {
-        throw new InvalidArgumentError('Não existe usuário com esse e-mail')
+        throw new InvalidArgumentError('Não existe usuário com esse e-mail!')
     }
 }
 
 async function verificaSenha(senha, senhaHash) {
-    bcrypt.compare(senha, senhaHash, function(err, result) {
-        if (err) {
-            return new InvalidArgumentError('Senha ou e-mail inválidos')
-        } else {
-            return result
-        }
-        // result == false
-    });
+    const senhaValida = await bcrypt.compare(senha, senhaHash)    
+    if (!senhaValida) {
+        throw new InvalidArgumentError('Senha ou e-mail inválidos')
+    }
 }
 
 passport.use(
@@ -34,7 +29,6 @@ passport.use(
     }, async (email, senha, done) => {
         try {
             const usuario = await usuarioServices.listarUmRegistro({'email': email});
-            console.log(usuario)
             verificaUsuario(usuario)
             await verificaSenha(senha, usuario.senha)
 
