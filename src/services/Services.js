@@ -1,4 +1,5 @@
 import Modelo from "../models/index.js";
+import { InvalidArgumentError } from "../erros/erros.js"
 
 export default class Services {
     constructor(nomeDoModelo) {
@@ -10,11 +11,15 @@ export default class Services {
     }
 
     async listarPorId(id) {
-        return Modelo[this.nomeDoModelo].findById(id)
+        const dado = await Modelo[this.nomeDoModelo].findById(id)
+        if (!dado) {
+            throw new InvalidArgumentError('Id não encontrado')
+        }
+        return dado
     }
 
     async listarUmRegistro(where = {}) {
-        return Modelo[this.nomeDoModelo].find(where).exec()
+        return Modelo[this.nomeDoModelo].findOne(where).exec()
     }
 
     async cadastrar(dados) {

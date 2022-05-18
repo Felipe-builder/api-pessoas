@@ -17,7 +17,11 @@ class UsuarioController {
   }
 
   static async login(req, res) {
-    return res.status(204).send()
+    try {
+      return res.status(204).send()
+    } catch(err) {
+      return res.status(401).json({message: err.message})
+    }
   }
 
   static async listarUsuarioPorId(req, res) {
