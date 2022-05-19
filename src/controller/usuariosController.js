@@ -3,7 +3,10 @@ import moment from "moment";
 import { UsuarioServices } from "../services/UsuarioServices.js"
 const usuarioServices = new UsuarioServices()
 
+import Token from "../models/Token.js";
+
 import usuarios from "../models/Usuario.js";
+
 
 class UsuarioController {
 
@@ -18,6 +21,8 @@ class UsuarioController {
 
   static async login(req, res) {
     try {
+      const token = Token.criarToken(req.user)
+      res.set('Authorization', token)
       return res.status(204).send()
     } catch(err) {
       return res.status(401).json({message: err.message})
