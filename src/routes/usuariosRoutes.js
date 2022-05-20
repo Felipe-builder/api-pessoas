@@ -1,13 +1,14 @@
 import express from "express";
 import passport from "passport";
 
+import { local } from "../utils/middlewares-autenticacao.js"
 import UsuarioController from "../controller/usuariosController.js";
 
 const router = express.Router();
 
 router
     .get("/usuarios", UsuarioController.listarUsuarios)
-    .post("/usuarios/login", passport.authenticate('local', {session: false}), UsuarioController.login)
+    .post("/usuarios/login", local, UsuarioController.login)
     .get("/usuarios/busca-data", UsuarioController.listarUsuarioPorDataCriacao)
     .get("/usuarios/busca-nome", UsuarioController.listarUsuarioPorNome)
     .get("/usuarios/:id", passport.authenticate('bearer', {session: false}), UsuarioController.listarUsuarioPorId)
