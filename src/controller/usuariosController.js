@@ -20,13 +20,9 @@ class UsuarioController {
   }
 
   static async login(req, res) {
-    try {
-      const token = Token.criarToken(req.user)
-      res.set('Authorization', token)
-      return res.status(204).send()
-    } catch(err) {
-      return res.status(401).json({message: err.message})
-    }
+    const token = Token.criarTokenJWT(req.user)
+    res.set('Authorization', token)
+    return res.status(204).send()
   }
 
   static async listarUsuarioPorId(req, res) {

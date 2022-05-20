@@ -1,12 +1,12 @@
 import  jwt  from "jsonwebtoken";
 
 export default class Token {
-    static criarToken(usuario) {
+    static criarTokenJWT(usuario) {
         const payload = {
-            id: usuario.id
+            id: usuario._id
         }
-
         const token = jwt.sign(payload, process.env.CHAVE_JWT);
+        console.log(token)
         return token
     }
 }

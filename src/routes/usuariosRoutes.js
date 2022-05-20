@@ -10,9 +10,9 @@ router
     .post("/usuarios/login", passport.authenticate('local', {session: false}), UsuarioController.login)
     .get("/usuarios/busca-data", UsuarioController.listarUsuarioPorDataCriacao)
     .get("/usuarios/busca-nome", UsuarioController.listarUsuarioPorNome)
-    .get("/usuarios/:id", UsuarioController.listarUsuarioPorId)
+    .get("/usuarios/:id", passport.authenticate('bearer', {session: false}), UsuarioController.listarUsuarioPorId)
     .post("/usuarios", UsuarioController.cadastrarUsuario)
     .put("/usuarios/:id", UsuarioController.atualizarUsuario)
-    .delete("/usuarios/:id", UsuarioController.deletarUsuario)
+    .delete("/usuarios/:id", passport.authenticate('bearer', {session: false}), UsuarioController.deletarUsuario)
 
 export default router;
