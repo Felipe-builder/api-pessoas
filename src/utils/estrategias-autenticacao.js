@@ -49,7 +49,7 @@ passport.use(
             try {
                 const payload = jwt.verify(token, process.env.CHAVE_JWT);
                 const usuario = await usuarioServices.listarPorId(payload.id);
-                done(null, usuario);
+                done(null, usuario, { token: token });
             } catch (erro) {
                 done(erro);
             }

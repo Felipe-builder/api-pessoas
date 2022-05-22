@@ -4,7 +4,7 @@ import { UsuarioServices } from "../services/UsuarioServices.js"
 const usuarioServices = new UsuarioServices()
 
 import Token from "../models/Token.js";
-
+import * as blacklist from "../../redis/manipulaBlacklist.js";
 import usuarios from "../models/Usuario.js";
 
 
@@ -25,14 +25,24 @@ class UsuarioController {
     return res.status(204).send()
   }
 
+  static async logout(req, res) {
+    try {
+      const token = req.token;
+      await blacklist.adiciona(token);
+      return res.status(204).send()   
+    } catch (err) {
+      return res.status(500).json({message: err.message })
+    }
+  }
+
   static async listarUsuarioPorId(req, res) {
     const id = req.params.id;
 
     try {
       const usuarioEncontrado = await usuarioServices.listarPorId(id)
-      return res.status(200).send(usuarioEncontrado);
+      return res.status(200).json(usuarioEncontrado);
     } catch(err) {
-      return res.status(404).send({message: `${err.message} - Id do Usuario não encontrado.`})
+      return res.status(404).json({message: `${err.message} - Id do Usuario não encontrado.`})
     }
   }
 
@@ -41,9 +51,9 @@ class UsuarioController {
 
     try {
       const usuarioCadastrado = await usuarioServices.cadastrar(usuario)
-      return res.status(201).send(usuarioCadastrado)
+      return res.status(201).json(usuarioCadastrado)
     } catch(err) {
-      return res.status(500).send({message: `${err.message} - falha ao cadastrar usuario.`})
+      return res.status(500).json({message: `${err.message} - falha ao cadastrar usuario.`})
     }
   }
 
@@ -58,7 +68,7 @@ class UsuarioController {
       await usuarioServices.atualizar(id, body)
       return res.status(200).json({message: 'Usuario atualizado com sucesso!'})
     } catch (err) {
-      return res.status(500).send({message: err.message})
+      return res.status(500).json({message: err.message})
     }
   }
 
@@ -67,9 +77,9 @@ class UsuarioController {
 
     try {
       await usuarioServices.remover(id)
-      return res.status(200).send({message: 'Usuario removido com sucesso!'})
+      return res.status(200).json({message: 'Usuario removido com sucesso!'})
     } catch (err) {
-      res.status(500).send({message: err.message})      
+      res.status(500).json({message: err.message})      
     }
   }
 
@@ -78,9 +88,9 @@ class UsuarioController {
     const nome = req.query.usuario_nome
     try {
     const usuariosEncontrados = await usuarioServices.listarUmRegistro({'nome': { '$regex': nome, '$options': 'i'}})
-    return res.status(200).send(usuariosEncontrados)
+    return res.status(200).json(usuariosEncontrados)
     } catch (err) {
-      return res.status(404).send({message: `${err.message} - Não foi localizado usuarios por esse Usuário`})      
+      return res.status(404).json({message: `${err.message} - Não foi localizado usuarios por esse Usuário`})      
     }
   }
 
@@ -90,9 +100,9 @@ class UsuarioController {
 
     try {
       const usuariosEncontrados = await usuarios.find({'createdAt': { $gte: dataCriacao, $lte: dt} }).exec()  
-      return res.status(200).send(usuariosEncontrados)
+      return res.status(200).json(usuariosEncontrados)
     } catch (err) {
-      return res.status(404).send({message: `${err.message} - Não há usuarios regristado nessa data!`})
+      return res.status(404).json({message: `${err.message} - Não há usuarios regristado nessa data!`})
     }
   }
 }

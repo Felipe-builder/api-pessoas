@@ -5,8 +5,7 @@ export default class Token {
         const payload = {
             id: usuario._id
         }
-        const token = jwt.sign(payload, process.env.CHAVE_JWT);
-        console.log(token)
+        const token = jwt.sign(payload, process.env.CHAVE_JWT, { expiresIn: '15m'});
         return token
     }
 }

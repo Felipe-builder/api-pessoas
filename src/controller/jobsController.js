@@ -87,7 +87,6 @@ class JobController {
 
   static listarJobPorNomeUsuario = (req, res) => {
     const nomeUsuario = req.query.usuario_nome;
-    console.log(nomeUsuario);
     jobs.find({ 'usuario.nome' : { '$regex': nomeUsuario, '$options': 'i'}})
       .populate('usuario', 'nome')
       .exec((err, jobs) => {
@@ -102,8 +101,6 @@ class JobController {
   static listarJobPorDataCriacao = (req, res) => {
     const dataCriacao = new Date(req.query.dt_criacao);
     const dt = new Date(moment(dataCriacao).add(1, 'days'));
-    console.log(typeof dataCriacao + " " + dataCriacao)
-    console.log(typeof dt + " " + (dt))
   
     jobs.find({'createdAt': { $gte: dataCriacao,
               $lte: dt} })
