@@ -6,24 +6,24 @@ import * as redisConnect from "./blacklist.js";
 
 const blacklist = redisConnect.default
 
-// const existsAsync = promisify(blacklist.exists).bind(blacklist);
-// const setAsync = promisify(blacklist.set).bind(blacklist);
+
+// const existsAsync = promisify(blacklist.default.exists).bind(blacklist.default);
+// const setAsync = promisify(blacklist.default.set).bind(blacklist.default);
 
 function geraTokenHash(token){
     return createHash('sha256')
             .update(token)
             .digest('hex');
 }
-
 export async function adiciona(token) {
     const dtExpiracao = jwt.decode(token).exp;
     const tokenHash = geraTokenHash(token);
-    await blacklist.set(tokenHash, '');
-    blacklist.expireAt(tokenHash, dtExpiracao);
+    await blacklist.set(`blacklist:${tokenHash}`, '');
+    blacklist.exists(`blacklist:${tokenHash}`, dtExpiracao);
 }
 
 export async function contemToken(token) {
     const tokenHash = geraTokenHash(token);
-    const resultado = await blacklist.exists(tokenHash);
+    const resultado = await blacklist.exists(`blacklist:${tokenHash}`);
     return resultado === 1;
 }

@@ -16,10 +16,12 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "bluebird": "^3.7.2",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.17.3",
+    "ioredis": "^5.0.5",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.34",
@@ -27,6 +29,7 @@
     "passport": "^0.5.3",
     "passport-http-bearer": "^1.0.1",
     "passport-local": "^1.0.0",
+    "promise-redis": "^0.0.5",
     "redis": "^4.1.0",
     "validator": "^13.7.0"
   }
