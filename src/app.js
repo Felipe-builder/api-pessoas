@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 
 import db from "./config/dbConnect.js";
 import routes from "./routes/index.js";
+import * as blacklist from "../redis/blacklist.js";
 import EstrategiasAutenticacao from "./utils/index.js";
 
 
@@ -17,6 +18,8 @@ db.once("open", () => {
 const app = express();
 
 app.use(bodyParser.json());
+
+await blacklist.redisConnect();
 
 app.use(cors());
 
