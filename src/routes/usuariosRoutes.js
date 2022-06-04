@@ -11,7 +11,7 @@ router
     .get("/usuarios/logout", middlewaresAutenticacao.bearer, UsuarioController.logout)
     .get("/usuarios/busca-data", UsuarioController.listarUsuarioPorDataCriacao)
     .get("/usuarios/busca-nome", UsuarioController.listarUsuarioPorNome)
-    .get("/usuarios/:id", middlewaresAutenticacao.bearer, UsuarioController.listarUsuarioPorId)
+    .get("/usuarios/:id", UsuarioController.listarUsuarioPorId)
     .post("/usuarios", UsuarioController.cadastrarUsuario)
     .put("/usuarios/:id", middlewaresAutenticacao.bearer, UsuarioController.atualizarUsuario)
     .delete("/usuarios/:id", middlewaresAutenticacao.bearer, UsuarioController.deletarUsuario)

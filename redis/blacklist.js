@@ -11,7 +11,6 @@ export async function redisConnect(){
     });
     console.log("conectado")
     await client.connect();
-    console.log("conxexão feita")
 };
 
 export default client;

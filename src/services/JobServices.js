@@ -8,14 +8,27 @@ export class JobServices extends Services {
     }
 
     async listarTudo() {
-        return Modelo[this.nomeDoModelo].find().populate('usuario', 'nome').exec()
+        return Modelo[this.nomeDoModelo]
+            .find()
+            .populate('usuario', 'nome')
+            .exec();
     }
 
     async listarPorId(id) {
-        return Modelo[this.nomeDoModelo].findById(id).populate('usuario').exec()
+        return Modelo[this.nomeDoModelo]
+            .findById(id)
+            .populate('usuario')
+            .exec();
     }
 
     async remover(id) {
-        return Modelo[this.nomeDoModelo].findByIdAndDelete(id) 
+        return Modelo[this.nomeDoModelo]
+            .findByIdAndDelete(id);
+    }
+
+    async listarUsuarioPorId(usuarioID) {
+        return Modelo[this.nomeDoModelo]
+            .find({'usuario': usuarioID})
+            .populate('usuario', 'nome');
     }
 }
