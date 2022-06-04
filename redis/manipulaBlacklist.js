@@ -1,14 +1,9 @@
 import jwt from "jsonwebtoken";
 import { createHash } from "crypto";
-import { promisify } from "util";
 
 import * as redisConnect from "./blacklist.js";
 
 const blacklist = redisConnect.default
-
-
-// const existsAsync = promisify(blacklist.default.exists).bind(blacklist.default);
-// const setAsync = promisify(blacklist.default.set).bind(blacklist.default);
 
 function geraTokenHash(token){
     return createHash('sha256')

@@ -2,6 +2,7 @@ import moment from "moment";
 
 import jobs from "../models/Job.js";
 import { JobServices } from "../services/JobServices.js";
+import { DataUtils } from "../utils/DataUtils.js";
 const jobService = new JobServices()
 
 class JobController {
@@ -28,16 +29,13 @@ class JobController {
   }
 
   static async cadastrarJob(req, res) {
-    const novaData = new Date();
     const { valorIntervalo, valorHorarioFixo } = req.body
-    if (typeof valorIntervalo === 'string' && valorIntervalo.length > 0) {
-      let hours = valorIntervalo.split(':');
-      novaData.setHours((Number(hours[0] - 3)), Number(hours[1]));
-      req.body.valorIntervalo = novaData;
-    } else if (typeof valorHorarioFixo === 'string' && valorHorarioFixo.length > 0) {
-      let hours = valorHorarioFixo.split(':');
-      novaData.setHours((Number(hours[0] - 3)), Number(hours[1]));
-      req.body.valorHorarioFixo = novaData;
+    console.log(req.body)
+    if (valorIntervalo) {
+      req.body.valorIntervalo = DataUtils.modificaValorIntervalo(valorIntervalo)
+    } 
+    if (valorHorarioFixo) {
+      req.body.valorHorarioFixo = DataUtils.modificaValoHorarioFixor(valorHorarioFixo);
     }
     const job = req.body;
     try {
