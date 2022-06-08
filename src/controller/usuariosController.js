@@ -20,18 +20,19 @@ class UsuarioController {
   }
 
   static async login(req, res) {
-    const token = Token.criarTokenJWT(req.user)
-    res.set('Authorization', token)
-    return res.status(204).send()
+    const token = Token.criarTokenJWT(req.user);
+    const refreshToken = Token.criaTokenOpaco();
+    res.set('Authorization', token);
+    return res.status(204).json({ refreshToken });
   }
 
   static async logout(req, res) {
     try {
       const token = req.token;
       await blacklist.adiciona(token);
-      return res.status(204).send()   
+      return res.status(204).send();
     } catch (err) {
-      return res.status(500).json({message: err.message })
+      return res.status(500).json({message: err.message });
     }
   }
 
