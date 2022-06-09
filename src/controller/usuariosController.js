@@ -22,7 +22,7 @@ class UsuarioController {
 
   static async login(req, res) {
     const token = Token.criarTokenJWT(req.user);
-    const refreshToken = Token.criaTokenOpaco(req.user);
+    const refreshToken = await Token.criaTokenOpaco(req.user);
     res.set('Authorization', token);
     return res.status(200).json({ refreshToken });
   }

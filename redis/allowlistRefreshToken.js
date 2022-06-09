@@ -1,5 +1,5 @@
 import redis from "redis";
-import manipulaLista from "./manipulaLista.js";
+import { ManipulaLista } from "./ManipulaLista.js";
 
 const allowlist = redis.createClient();
 
@@ -10,4 +10,5 @@ export async function redisConnect(){
     await allowlist.connect();
 };
 
-export default manipulaLista(allowlist);
+const allowlistRefreshToken = new ManipulaLista(allowlist);
+export { allowlistRefreshToken }

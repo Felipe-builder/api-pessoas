@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import moment from "moment";
 
-import * as allowlist from "../../redis/allowlistRefreshToken.js";
+import { allowlistRefreshToken } from "../../redis/allowlistRefreshToken.js";
 
 
 export default class Token {
@@ -14,10 +14,10 @@ export default class Token {
         return token
     }
 
-    static criaTokenOpaco(usuario) {
+    static async criaTokenOpaco(usuario) {
         const tokenOpaco = crypto.randomBytes(24).toString('hex');
         const dataExpiracao = moment().add(5, 'd').unix();
-        
+        await allowlistRefreshToken.adiciona(`allowlist-refresh-token:${tokenOpaco}`, usuario.id, dataExpiracao)
 
         return tokenOpaco;
     }
