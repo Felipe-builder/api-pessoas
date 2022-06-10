@@ -1,14 +1,11 @@
-import redis from "redis";
 import { ManipulaLista } from "./ManipulaLista.js";
 
-const allowlist = redis.createClient();
+export class AllowlistRefreshToken extends ManipulaLista {
 
-export async function redisConnect(){
-    allowlist.on("error", (error) => {
-        console.log(error);
-    });
-    await allowlist.connect();
-};
-
-const allowlistRefreshToken = new ManipulaLista(allowlist);
-export { allowlistRefreshToken }
+    async redisConnect(){
+        this.lista.on("error", (error) => {
+            console.log(error);
+        });
+        await this.lista.connect();       
+    };    
+}

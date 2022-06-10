@@ -2,8 +2,8 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import moment from "moment";
 
-import { allowlistRefreshToken } from "../../redis/allowlistRefreshToken.js";
-
+import { AllowlistRefreshToken } from "../../redis/allowlistRefreshToken.js";
+const allowlistRefreshToken = new AllowlistRefreshToken();
 
 export default class Token {
     static criarTokenJWT(usuario) {
@@ -18,7 +18,6 @@ export default class Token {
         const tokenOpaco = crypto.randomBytes(24).toString('hex');
         const dataExpiracao = moment().add(5, 'd').unix();
         await allowlistRefreshToken.adiciona(`allowlist-refresh-token:${tokenOpaco}`, usuario.id, dataExpiracao)
-
         return tokenOpaco;
     }
 }
