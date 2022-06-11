@@ -17,7 +17,7 @@ export default class Token {
     static async criaTokenOpaco(usuario) {
         const tokenOpaco = crypto.randomBytes(24).toString('hex');
         const dataExpiracao = moment().add(5, 'd').unix();
-        await allowlistRefreshToken.adiciona(`allowlist-refresh-token:${tokenOpaco}`, usuario.id, dataExpiracao)
+        await allowlistRefreshToken.adiciona(`allowlist-refresh-token:${tokenOpaco}`, usuario._id.toString(), dataExpiracao)
         return tokenOpaco;
     }
 }
