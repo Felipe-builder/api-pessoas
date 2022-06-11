@@ -13,7 +13,7 @@
 
   <h1 align="center">API - Pessoas</h1>
   <h3 align="center"></h3>
-  <p align="center" style="indent-text">.<p>
+  <p align="center" style="indent-text">resume<p>
 
 ## Pre Requisites
 <a href="https://nodejs.org/en/download/"><img src="https://img.shields.io/badge/nodejs-v16.14.0-green?style=for-the-badge&logo=node.js"/></a></br>
