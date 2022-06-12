@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken"
 
 import { UsuarioServices } from "../services/UsuarioServices.js";
 import { InvalidArgumentError } from "../erros/erros.js"
-import { contemToken } from "../../redis/manipulaBlacklist.js";
+import { contemToken } from "../../redis/blocklistAccessToken.js";
 
 
 

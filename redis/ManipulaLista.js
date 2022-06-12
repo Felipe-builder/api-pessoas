@@ -12,17 +12,17 @@ export class ManipulaLista {
     }
 
     async buscaValor(chave) {
-        return this.lista.get(chave)
+        return client.get(chave)
     }
 
     //`blacklist:${tokenHash}`
     async contemChave(chave) {
-        const resultado = await this.lista.exists(chave);
+        const resultado = await client.exists(chave);
         return resultado === 1;
     }
 
     async deleta(chave) {
-        await this.lista.del(chave)
+        await client.del(chave)
     }
 }
 
