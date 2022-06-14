@@ -9,3 +9,4 @@ export class AllowlistRefreshToken extends ManipulaLista {
         await this.lista.connect();       
     };    
 }
+// refatorar para `allowlist-refresh-token:${tokenOpaco}` está aqui

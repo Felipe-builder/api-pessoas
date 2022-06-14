@@ -6,9 +6,10 @@ import UsuarioController from "../controller/usuariosController.js";
 const router = express.Router();
 
 router
-    .get("/usuarios", UsuarioController.listarUsuarios)
     .post("/usuarios/login", middlewaresAutenticacao.local, UsuarioController.login)
+    .post("/usuarios/atualiza_token", middlewaresAutenticacao.refresh, UsuarioController.login)
     .get("/usuarios/logout", middlewaresAutenticacao.bearer, UsuarioController.logout)
+    .get("/usuarios", UsuarioController.listarUsuarios)
     .get("/usuarios/busca-data", UsuarioController.listarUsuarioPorDataCriacao)
     .get("/usuarios/busca-nome", UsuarioController.listarUsuarioPorNome)
     .get("/usuarios/:id", UsuarioController.listarUsuarioPorId)
