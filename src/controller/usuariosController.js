@@ -4,7 +4,7 @@ import { UsuarioServices } from "../services/UsuarioServices.js"
 const usuarioServices = new UsuarioServices()
 
 import Token from "../models/Token.js";
-import * as blacklist from "../../redis/manipulaBlacklist.js";
+import * as blacklist from "../../redis/blocklistAccessToken.js";
 
 import usuarios from "../models/Usuario.js";
 

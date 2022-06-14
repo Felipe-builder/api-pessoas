@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 
 import db from "./config/dbConnect.js";
 import routes from "./routes/index.js";
-import * as blacklist from "../redis/blacklist.js";
+import * as blacklist from "../redis/blocklistAccessToken.js";
 import { AllowlistRefreshToken } from "../redis/allowlistRefreshToken.js"
 import EstrategiasAutenticacao from "./utils/index.js";
 
