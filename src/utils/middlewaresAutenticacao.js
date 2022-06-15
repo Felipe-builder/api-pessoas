@@ -11,15 +11,15 @@ async function verificaRefreshToken(refreshToken) {
         throw new InvalidArgumentError('Refresh token não enviado');
     }
 
-    const id = await allowlistRefreshToken.buscaValor(`allowlist-refresh-token:${refreshToken}`);
+    const id = await allowlistRefreshToken.buscaValor(refreshToken);
     if (!id) {
-        throw new InvalidArgumentError('Refrehs token inválido!');
+        throw new InvalidArgumentError('Refresh token inválido!');
     }
     return id;
 }
 
 async function invalidaRefreshToken(refreshToken) {
-    await allowlistRefreshToken.deleta(`allowlist-refresh-token:${refreshToken}`);
+    await allowlistRefreshToken.deleta(refreshToken);
 }
 
 
