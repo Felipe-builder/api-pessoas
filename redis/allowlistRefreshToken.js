@@ -1,6 +1,10 @@
 import { ManipulaLista } from "./ManipulaLista.js";
 
 export class AllowlistRefreshToken extends ManipulaLista {
+    constructor(){
+        super('allowlist-refresh-token:')
+    }
+
 
     async redisConnect(){
         this.lista.on("error", (error) => {
@@ -9,4 +13,3 @@ export class AllowlistRefreshToken extends ManipulaLista {
         await this.lista.connect();       
     };    
 }
-// refatorar para `allowlist-refresh-token:${tokenOpaco}` está aqui

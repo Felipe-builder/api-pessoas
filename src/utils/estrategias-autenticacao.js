@@ -6,8 +6,8 @@ import jwt from "jsonwebtoken"
 
 import { UsuarioServices } from "../services/UsuarioServices.js";
 import { InvalidArgumentError } from "../erros/erros.js"
-import { contemToken } from "../../redis/blocklistAccessToken.js";
-
+import { BlocklistAccessToken } from "../../redis/blocklistAccessToken.js";
+const blocklistAccessToken = new BlocklistAccessToken();
 
 
 const usuarioServices = new UsuarioServices()
@@ -28,7 +28,7 @@ async function verificaSenha(senha, senhaHash) {
 }
 
 async function verificaTokenNaBlacklist(token) {
-    const tokenNaBlacklist = await contemToken(token);
+    const tokenNaBlacklist = await blocklistAccessToken.contemAccessToken(token);
     if (tokenNaBlacklist) {
         throw new jwt.JsonWebTokenError('Token inválido por logout!');
     }
