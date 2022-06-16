@@ -1,6 +1,9 @@
 import express from "express";
+
+// Routers
+import apidocs from "./apidocsRouter.js"
 import jobs from "./jobsRouter.js";
-import usuarios from "./usuariosRoutes.js";
+import usuarios from "./usuariosRouter.js";
 
 const routes = (app) => {
   app.route('/').get((req, res) => {
@@ -9,6 +12,7 @@ const routes = (app) => {
 
   app.use(
     express.json(),
+    apidocs,
     usuarios,
     jobs
   )
