@@ -3,11 +3,14 @@ import moment from "moment";
 import { UsuarioServices } from "../services/UsuarioServices.js"
 const usuarioServices = new UsuarioServices()
 
-import Token from "../models/Token.js";
-import * as blacklist from "../../redis/blocklistAccessToken.js";
+import { AccessToken, TokenOpaco } from "../models/Token.js";
+const accessToken = new AccessToken();
+const tokenOpaco = new TokenOpaco();
+import { BlocklistAccessToken } from "../../redis/blocklistAccessToken.js";
 
 import usuarios from "../models/Usuario.js";
 
+const blocklist = new BlocklistAccessToken();
 
 class UsuarioController {
 
@@ -21,8 +24,9 @@ class UsuarioController {
   }
 
   static async login(req, res) {
-    const token = Token.criarTokenJWT(req.user);
-    const refreshToken = await Token.criaTokenOpaco(req.user);
+    const id = req.user._id.toString()
+    const token = accessToken.criarTokenJWT(id);
+    const refreshToken = await tokenOpaco.criaTokenOpaco(id);
     res.set('Authorization', token);
     return res.status(200).json({ refreshToken });
   }
@@ -30,7 +34,7 @@ class UsuarioController {
   static async logout(req, res) {
     try {
       const token = req.token;
-      await blacklist.adiciona(token);
+      await accessToken.invalidaTokenJWT(token);
       return res.status(204).send();
     } catch (err) {
       return res.status(500).json({message: err.message });
@@ -38,7 +42,7 @@ class UsuarioController {
   }
 
   static async listarUsuarioPorId(req, res) {
-    const id = req.params.id;
+    const { params: {id}} = req;
 
     try {
       const usuarioEncontrado = await usuarioServices.listarPorId(id)

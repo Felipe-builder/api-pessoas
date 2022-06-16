@@ -8,7 +8,7 @@ export class ManipulaLista {
     }
 
     async adiciona(chave, valor, dataExpiracao) {
-        await client.set(chave, valor);
+        await client.set(`${this.prefix}${chave}`, valor);
         client.exists(`${this.prefix}${chave}`, dataExpiracao);
     }
 

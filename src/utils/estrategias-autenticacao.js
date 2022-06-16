@@ -2,14 +2,11 @@ import passport from "passport";
 import passportLocal from "passport-local";
 import passportBearer from "passport-http-bearer";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken"
 
 import { UsuarioServices } from "../services/UsuarioServices.js";
-import { InvalidArgumentError } from "../erros/erros.js"
-import { BlocklistAccessToken } from "../../redis/blocklistAccessToken.js";
-const blocklistAccessToken = new BlocklistAccessToken();
+import { AccessToken } from "../models/Token.js";
 
-
+const accessToken = new AccessToken();
 const usuarioServices = new UsuarioServices()
 const LocalStrategy = passportLocal.Strategy;
 const BearerStrategy = passportBearer.Strategy;
@@ -27,12 +24,6 @@ async function verificaSenha(senha, senhaHash) {
     }
 }
 
-async function verificaTokenNaBlacklist(token) {
-    const tokenNaBlacklist = await blocklistAccessToken.contemAccessToken(token);
-    if (tokenNaBlacklist) {
-        throw new jwt.JsonWebTokenError('Token inválido por logout!');
-    }
-}
 
 passport.use(
     new LocalStrategy({
@@ -57,9 +48,8 @@ passport.use(
     new BearerStrategy(
         async (token, done) => {
             try {
-                await verificaTokenNaBlacklist(token);
-                const payload = jwt.verify(token, process.env.CHAVE_JWT);
-                const usuario = await usuarioServices.listarPorId(payload.id);
+                const id = await accessToken.verificaTokenJWT(token);
+                const usuario = await usuarioServices.listarPorId(id);
                 done(null, usuario, { token: token });
             } catch (erro) {
                 done(erro);
