@@ -5,6 +5,7 @@ import UsuarioController from "../controller/usuariosController.js";
 
 const router = express.Router();
 
+
 router
     .post("/usuarios/login", middlewaresAutenticacao.local, UsuarioController.login)
     .post("/usuarios/atualiza_token", middlewaresAutenticacao.refresh, UsuarioController.login)

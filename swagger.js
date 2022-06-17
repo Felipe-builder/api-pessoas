@@ -4,8 +4,11 @@ import { readFile } from 'fs/promises';
 const outputFile = JSON.parse(await readFile(new URL("./swagger/swagger_output.json", import.meta.url)));
 
 
-const endpointsFiles = ['./src/routes/index.js', './src/controller/*.js'];
+const endpointsFiles = ['./src/routes/*.js', './src/controller/*.js'];
 
+const options = {
+    openapi: "3.0.1",          // Enable/Disable OpenAPI. By default is null
+}
 
 const doc = {
     info: {
@@ -30,4 +33,4 @@ const doc = {
     components: {}            // by default: empty object (OpenAPI 3.x)
   };
 
-swaggerAutogen()(outputFile, endpointsFiles, doc);
+swaggerAutogen(options)(outputFile, endpointsFiles, doc);
