@@ -6,8 +6,9 @@ export default class Services {
         this.nomeDoModelo = nomeDoModelo
     }
 
-    async listarTudo() {
-        return Modelo[this.nomeDoModelo].find()
+    async listarTudo(where = {}) {
+        const lista = await Modelo[this.nomeDoModelo].find(where)
+        return lista;
     }
 
     async listarPorId(id) {

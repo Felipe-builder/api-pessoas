@@ -3,26 +3,30 @@ import moment from "moment";
 import { UsuarioServices } from "../services/UsuarioServices.js"
 const usuarioServices = new UsuarioServices()
 
-import Token from "../models/Token.js";
-import * as blacklist from "../../redis/blocklistAccessToken.js";
+import { AccessToken, TokenOpaco } from "../models/Token.js";
+const accessToken = new AccessToken();
+const tokenOpaco = new TokenOpaco();
+import { BlocklistAccessToken } from "../../redis/blocklistAccessToken.js";
 
 import usuarios from "../models/Usuario.js";
 
+const blocklist = new BlocklistAccessToken();
 
 class UsuarioController {
 
   static async listarUsuarios(req, res) {
     try {
-      const usuariosEncontrados = await usuarioServices.listarTudo()
-      return res.status(200).json(usuariosEncontrados)
+      const usuariosEncontrados = await usuarioServices.listarTudo();
+      return res.status(200).json(usuariosEncontrados);
     } catch(err) {
-      return res.status(500).json({message: err.message})
+      return res.status(500).json({message: err.message});
     }
   }
 
   static async login(req, res) {
-    const token = Token.criarTokenJWT(req.user);
-    const refreshToken = await Token.criaTokenOpaco(req.user);
+    const id = req.user._id.toString()
+    const token = accessToken.criarTokenJWT(id);
+    const refreshToken = await tokenOpaco.criaTokenOpaco(id);
     res.set('Authorization', token);
     return res.status(200).json({ refreshToken });
   }
@@ -30,7 +34,7 @@ class UsuarioController {
   static async logout(req, res) {
     try {
       const token = req.token;
-      await blacklist.adiciona(token);
+      await accessToken.invalidaTokenJWT(token);
       return res.status(204).send();
     } catch (err) {
       return res.status(500).json({message: err.message });
@@ -38,7 +42,7 @@ class UsuarioController {
   }
 
   static async listarUsuarioPorId(req, res) {
-    const id = req.params.id;
+    const { params: {id}} = req;
 
     try {
       const usuarioEncontrado = await usuarioServices.listarPorId(id)
@@ -89,10 +93,10 @@ class UsuarioController {
   static async listarUsuarioPorNome(req, res) {
     const nome = req.query.usuario_nome
     try {
-    const usuariosEncontrados = await usuarioServices.listarUmRegistro({'nome': { '$regex': nome, '$options': 'i'}})
-    return res.status(200).json(usuariosEncontrados)
+    const usuariosEncontrados = await usuarioServices.listarTudo({'nome': { '$regex': nome, '$options': 'i'}});
+    return res.status(200).json(usuariosEncontrados);
     } catch (err) {
-      return res.status(404).json({message: `${err.message} - Não foi localizado usuarios por esse Usuário`})      
+      return res.status(404).json({message: `${err.message} - Não foi localizado usuarios por esse Usuário`}); 
     }
   }
 
@@ -101,10 +105,10 @@ class UsuarioController {
     const dt = new Date(moment(dataCriacao).add(1, 'days'));  
 
     try {
-      const usuariosEncontrados = await usuarios.find({'createdAt': { $gte: dataCriacao, $lte: dt} }).exec()  
-      return res.status(200).json(usuariosEncontrados)
+      const usuariosEncontrados = await usuarioServices.listarTudo({'createdAt': { $gte: dataCriacao, $lte: dt} });
+      return res.status(200).json(usuariosEncontrados);
     } catch (err) {
-      return res.status(404).json({message: `${err.message} - Não há usuarios regristado nessa data!`})
+      return res.status(404).json({message: `${err.message} - Não há usuarios regristado nessa data!`});
     }
   }
 }

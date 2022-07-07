@@ -1,26 +1,9 @@
 import passport from "passport";
 import { UsuarioServices } from "../services/UsuarioServices.js";
-import { InvalidArgumentError } from "../erros/erros.js";
-import { AllowlistRefreshToken } from "../../redis/allowlistRefreshToken.js";
+import { TokenOpaco } from "../models/Token.js";
 
-const allowlistRefreshToken = new AllowlistRefreshToken();
+const tokenOpaco = new TokenOpaco();
 const usuarioService = new UsuarioServices();
-
-async function verificaRefreshToken(refreshToken) {
-    if(!refreshToken) {
-        throw new InvalidArgumentError('Refresh token não enviado');
-    }
-
-    const id = await allowlistRefreshToken.buscaValor(refreshToken);
-    if (!id) {
-        throw new InvalidArgumentError('Refresh token inválido!');
-    }
-    return id;
-}
-
-async function invalidaRefreshToken(refreshToken) {
-    await allowlistRefreshToken.deleta(refreshToken);
-}
 
 
 export async function local(req, res, next){
@@ -77,7 +60,7 @@ export async function bearer(req, res, next) {
 export async function refresh(req, res, next) {
     try {
         const { refreshToken } = req.body;
-        const id = await verificaRefreshToken(refreshToken);
+        const id = await tokenOpaco.verificaTokenOpaco(refreshToken);
         await invalidaRefreshToken(refreshToken);
         req.user = await usuarioService.listarPorId(id)
         return next();
