@@ -16,10 +16,10 @@ class UsuarioController {
 
   static async listarUsuarios(req, res) {
     try {
-      const usuariosEncontrados = await usuarioServices.listarTudo()
-      return res.status(200).json(usuariosEncontrados)
+      const usuariosEncontrados = await usuarioServices.listarTudo();
+      return res.status(200).json(usuariosEncontrados);
     } catch(err) {
-      return res.status(500).json({message: err.message})
+      return res.status(500).json({message: err.message});
     }
   }
 
@@ -93,10 +93,10 @@ class UsuarioController {
   static async listarUsuarioPorNome(req, res) {
     const nome = req.query.usuario_nome
     try {
-    const usuariosEncontrados = await usuarioServices.listarUmRegistro({'nome': { '$regex': nome, '$options': 'i'}})
-    return res.status(200).json(usuariosEncontrados)
+    const usuariosEncontrados = await usuarioServices.listarTudo({'nome': { '$regex': nome, '$options': 'i'}});
+    return res.status(200).json(usuariosEncontrados);
     } catch (err) {
-      return res.status(404).json({message: `${err.message} - Não foi localizado usuarios por esse Usuário`})      
+      return res.status(404).json({message: `${err.message} - Não foi localizado usuarios por esse Usuário`}); 
     }
   }
 
@@ -105,10 +105,10 @@ class UsuarioController {
     const dt = new Date(moment(dataCriacao).add(1, 'days'));  
 
     try {
-      const usuariosEncontrados = await usuarios.find({'createdAt': { $gte: dataCriacao, $lte: dt} }).exec()  
-      return res.status(200).json(usuariosEncontrados)
+      const usuariosEncontrados = await usuarioServices.listarTudo({'createdAt': { $gte: dataCriacao, $lte: dt} });
+      return res.status(200).json(usuariosEncontrados);
     } catch (err) {
-      return res.status(404).json({message: `${err.message} - Não há usuarios regristado nessa data!`})
+      return res.status(404).json({message: `${err.message} - Não há usuarios regristado nessa data!`});
     }
   }
 }
