@@ -64,6 +64,9 @@ npm install
  > - Connect to mongodb cloud database
  >   - Create your account at https://cloud.mongodb.com
  >   - First Case(If you want to create your own database) do: After starting your organization, in your 'database' click on 'connect 'and 'connect your application' and use the template.
+
+> mongo -u "user" -p "password" HOSTIP --authenticationDatabase "admin" 
+> to access mongo in CLI
 >
 >> ```
 >> mongodb+srv://<username>:<password>@linkapi.lhkas.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
@@ -72,7 +75,7 @@ npm install
 > - Second Case
 >     - Send your IP so that your connection to the project database can be allowed
     
-3. Run
+1. Run
 
 ```
 npm run dev

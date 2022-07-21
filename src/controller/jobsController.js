@@ -70,7 +70,7 @@ class JobController {
   }
 
   static async listarJobPorUsuarioID(req, res) {
-    const usuarioID = req.query.usuario_id
+    const { usuario_id: usuarioID} = req.query
     try {
       const jobs =  await jobServices.listarUsuarioPorId(usuarioID);
       return res.status(200).send(jobs)
@@ -81,9 +81,13 @@ class JobController {
   }
 
   static listarJobPorNomeUsuario = (req, res) => {
-    const nomeUsuario = req.query.usuario_nome;
-    jobs.find({ 'usuario.nome' : { '$regex': nomeUsuario, '$options': 'i'}})
-      .populate('usuario', 'nome')
+    const { usuario_nome: nomeUsuario} = req.query;
+    // { 'usuario.nome' : { '$regex': nomeUsuario, '$options': 'i'}}
+    jobs.find()
+      .populate({
+        path: 'usuario',
+        match: { 'nome' : { '$regex': nomeUsuario, '$options': 'i'} },
+      })
       .exec((err, jobs) => {
         if(err) {
             res.status(404).send({message: `${err.message} - Não foi localizado jobs por esse Usuário`})

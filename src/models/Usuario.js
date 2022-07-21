@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import validator from "validator";
 import bcrypt from "bcrypt";
+import logger from "js-logger"
 
 const usuarioSchema = new mongoose.Schema(
   {
@@ -66,5 +67,13 @@ usuarioSchema.pre('save', function(next) {
 })
 
 const usuarios = mongoose.model('usuarios', usuarioSchema);
+mongoose.set('debug', (collection, method, query) => {
+  logger.info({
+    type: 'query',
+    collection,
+    method,
+    query
+  })
+});
 
 export default usuarios;

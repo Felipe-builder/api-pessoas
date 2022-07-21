@@ -66,7 +66,7 @@ class UsuarioController {
 
   //ainda precisa verificar validação de dados enviados
   static async atualizarUsuario(req, res) {
-    const id = req.params.id;
+    const { params: { id }} = req;
     const body = req.body 
 
     try {
@@ -79,7 +79,7 @@ class UsuarioController {
   }
 
   static async deletarUsuario(req, res) {
-    const id = req.params.id;
+    const { params: { id }} = req;
 
     try {
       await usuarioServices.remover(id)
@@ -91,7 +91,7 @@ class UsuarioController {
 
 
   static async listarUsuarioPorNome(req, res) {
-    const nome = req.query.usuario_nome
+    const { query: { usuario_nome: nome }} = req
     try {
     const usuariosEncontrados = await usuarioServices.listarTudo({'nome': { '$regex': nome, '$options': 'i'}});
     return res.status(200).json(usuariosEncontrados);
