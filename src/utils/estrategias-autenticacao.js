@@ -1,16 +1,22 @@
+// LIBS
 import passport from "passport";
 import passportLocal from "passport-local";
 import passportBearer from "passport-http-bearer";
 import bcrypt from "bcrypt";
 
+// SERVICES
 import { UsuarioServices } from "../services/UsuarioServices.js";
+
+// MODELS
 import { AccessToken } from "../models/Token.js";
 
+// INSTANCES
 const accessToken = new AccessToken();
 const usuarioServices = new UsuarioServices()
 const LocalStrategy = passportLocal.Strategy;
 const BearerStrategy = passportBearer.Strategy;
 
+// FUNCTIONS
 function verificaUsuario(usuario) {
     if (!usuario) {
         throw new InvalidArgumentError('Não existe usuário com esse e-mail!')
@@ -23,6 +29,7 @@ async function verificaSenha(senha, senhaHash) {
         throw new InvalidArgumentError('Senha ou e-mail inválidos')
     }
 }
+
 
 
 passport.use(

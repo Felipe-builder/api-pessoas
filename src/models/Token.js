@@ -1,12 +1,19 @@
+//LIBS
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import moment from "moment";
 
+// REDIS 
 import { AllowlistRefreshToken } from "../../redis/allowlistRefreshToken.js";
-const allowlistRefreshToken = new AllowlistRefreshToken();
-import { InvalidArgumentError } from "../erros/erros.js"
 import { BlocklistAccessToken } from "../../redis/blocklistAccessToken.js";
+
+// ERRORS
+import { InvalidArgumentError } from "../erros/erros.js"
+
+// INSTANCES
 const blocklistAccessToken = new BlocklistAccessToken();
+const allowlistRefreshToken = new AllowlistRefreshToken();
+
 
 export class Token {
     constructor(nome, expiracao) {

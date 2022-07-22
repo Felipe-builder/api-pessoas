@@ -1,15 +1,19 @@
 import moment from "moment";
 
+//SERVICES
 import { UsuarioServices } from "../services/UsuarioServices.js"
-const usuarioServices = new UsuarioServices()
 
+//MODELS
 import { AccessToken, TokenOpaco } from "../models/Token.js";
-const accessToken = new AccessToken();
-const tokenOpaco = new TokenOpaco();
-import { BlocklistAccessToken } from "../../redis/blocklistAccessToken.js";
-
 import usuarios from "../models/Usuario.js";
 
+//REDIS
+import { BlocklistAccessToken } from "../../redis/blocklistAccessToken.js";
+
+// INSTANCES
+const usuarioServices = new UsuarioServices()
+const accessToken = new AccessToken();
+const tokenOpaco = new TokenOpaco();
 const blocklist = new BlocklistAccessToken();
 
 class UsuarioController {
@@ -66,7 +70,7 @@ class UsuarioController {
 
   //ainda precisa verificar validação de dados enviados
   static async atualizarUsuario(req, res) {
-    const id = req.params.id;
+    const { params: { id }} = req;
     const body = req.body 
 
     try {
@@ -79,7 +83,7 @@ class UsuarioController {
   }
 
   static async deletarUsuario(req, res) {
-    const id = req.params.id;
+    const { params: { id }} = req;
 
     try {
       await usuarioServices.remover(id)
@@ -91,7 +95,7 @@ class UsuarioController {
 
 
   static async listarUsuarioPorNome(req, res) {
-    const nome = req.query.usuario_nome
+    const { query: { usuario_nome: nome }} = req
     try {
     const usuariosEncontrados = await usuarioServices.listarTudo({'nome': { '$regex': nome, '$options': 'i'}});
     return res.status(200).json(usuariosEncontrados);
