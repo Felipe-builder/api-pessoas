@@ -1,15 +1,19 @@
 import moment from "moment";
 
+//SERVICES
 import { UsuarioServices } from "../services/UsuarioServices.js"
-const usuarioServices = new UsuarioServices()
 
+//MODELS
 import { AccessToken, TokenOpaco } from "../models/Token.js";
-const accessToken = new AccessToken();
-const tokenOpaco = new TokenOpaco();
-import { BlocklistAccessToken } from "../../redis/blocklistAccessToken.js";
-
 import usuarios from "../models/Usuario.js";
 
+//REDIS
+import { BlocklistAccessToken } from "../../redis/blocklistAccessToken.js";
+
+// INSTANCES
+const usuarioServices = new UsuarioServices()
+const accessToken = new AccessToken();
+const tokenOpaco = new TokenOpaco();
 const blocklist = new BlocklistAccessToken();
 
 class UsuarioController {

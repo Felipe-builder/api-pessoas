@@ -13,7 +13,7 @@ router
     .get("/usuarios", UsuarioController.listarUsuarios)
     .get("/usuarios/busca-data", UsuarioController.listarUsuarioPorDataCriacao)
     .get("/usuarios/busca-nome", UsuarioController.listarUsuarioPorNome)
-    .get("/usuarios/:id", UsuarioController.listarUsuarioPorId)
+    .get("/usuarios/:id",middlewaresAutenticacao.bearer, UsuarioController.listarUsuarioPorId)
     .post("/usuarios", UsuarioController.cadastrarUsuario)
     .put("/usuarios/:id", middlewaresAutenticacao.bearer, UsuarioController.atualizarUsuario)
     .delete("/usuarios/:id", middlewaresAutenticacao.bearer, UsuarioController.deletarUsuario)
